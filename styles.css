@@ -1,0 +1,1298 @@
+/* ==========================================================================
+   CS2 CASE OPENING SIMULATOR - COMPLETE PRODUCTION STYLES
+   CS2 Dark Charcoal, Tactical High-Contrast Aesthetic & Modal Systems
+   ========================================================================== */
+
+/* --- CSS Variables & Design Tokens --- */
+:root {
+  /* Color Palette */
+  --bg-main: #131519;
+  --bg-secondary: #1b1e24;
+  --bg-card: #1e222b;
+  --bg-card-hover: #262c37;
+  --border-subtle: #2d3340;
+  --border-focus: #49546a;
+
+  /* Typography Colors */
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --text-muted: #6b7280;
+
+  /* CS2 Official Rarity Colors */
+  --rarity-mil-spec: #4b69ff;     /* Blue */
+  --rarity-restricted: #8847ff;   /* Purple */
+  --rarity-classified: #d32ce6;   /* Pink */
+  --rarity-covert: #eb4b4b;       /* Red */
+  --rarity-special: #ffd700;      /* Gold */
+
+  /* UI Accent & Pointer */
+  --accent-gold: #e5b338;
+  --accent-gold-glow: rgba(229, 179, 56, 0.45);
+  --pointer-color: #fca311;
+  --pointer-glow: rgba(252, 163, 17, 0.6);
+
+  /* Track & Card Dimensions */
+  --card-width: 180px;
+  --card-height: 220px;
+  --viewport-height: 240px;
+}
+
+/* --- Base Reset & Typography --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-main);
+  background-image: 
+    radial-gradient(circle at 50% 10%, rgba(35, 42, 54, 0.6) 0%, transparent 60%),
+    linear-gradient(180deg, #161920 0%, #101216 100%);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  user-select: none;
+}
+
+.text-gold {
+  color: var(--accent-gold);
+}
+
+/* --- Main Layout Container --- */
+.app-container {
+  max-width: 1140px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ==========================================================================
+   1. HEADER COMPONENT
+   ========================================================================== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 14px 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 28px;
+  height: 28px;
+  background: linear-gradient(135deg, var(--accent-gold), #b3851b);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  color: #111;
+  font-size: 14px;
+  box-shadow: 0 0 10px var(--accent-gold-glow);
+}
+
+.brand-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.brand-subtitle {
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Balance Pill */
+.user-balance {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 16, 20, 0.85);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 14px;
+  border-radius: 6px;
+}
+
+.balance-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+  color: var(--text-secondary);
+}
+
+.balance-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #10b981; /* Emerald */
+  font-family: monospace;
+}
+
+/* Add Funds Button */
+.add-funds-btn {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-funds-btn:hover {
+  background: rgba(16, 185, 129, 0.25);
+  border-color: #34d399;
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+/* Inventory Navigation Button */
+.inventory-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #242933;
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.inventory-btn:hover {
+  background-color: #2d3340;
+  border-color: var(--border-focus);
+  color: #fff;
+}
+
+/* ==========================================================================
+   2. CASE OPENING STAGE & VIEWPORT
+   ========================================================================== */
+.case-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4px;
+}
+
+.case-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.case-cost {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* Outer Viewport: Clamps horizontal overflowing cards */
+.case-viewport {
+  position: relative;
+  width: 100%;
+  height: var(--viewport-height);
+  background: #14171d;
+  border: 2px solid #282e3b;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 40px rgba(0, 0, 0, 0.8),
+    0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Left & Right Edge Vignette Fades */
+.case-viewport::before,
+.case-viewport::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.case-viewport::before {
+  left: 0;
+  background: linear-gradient(90deg, rgba(20, 23, 29, 0.95) 0%, transparent 100%);
+}
+
+.case-viewport::after {
+  right: 0;
+  background: linear-gradient(-90deg, rgba(20, 23, 29, 0.95) 0%, transparent 100%);
+}
+
+/* Center Winning Pointer Line */
+.pointer,
+.winning-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  background: var(--pointer-color);
+  z-index: 10;
+  pointer-events: none;
+  box-shadow: 0 0 14px var(--pointer-glow);
+}
+
+/* Top & Bottom Arrow Pips */
+.pointer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 11px solid var(--pointer-color);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+}
+
+.pointer::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 11px solid var(--pointer-color);
+  filter: drop-shadow(0 -2px 4px rgba(0, 0, 0, 0.8));
+}
+
+/* Horizontal Track Container */
+.items-strip {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 10px;
+  gap: 12px;
+  width: max-content;
+  will-change: transform;
+}
+
+/* ==========================================================================
+   3. ITEM CARDS & DYNAMIC RARITY THEMES
+   ========================================================================== */
+.item-card {
+  position: relative;
+  width: var(--card-width);
+  height: var(--card-height);
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.item-header {
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+}
+
+.item-weapon {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.item-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-visual {
+  position: relative;
+  width: 100%;
+  height: 105px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.item-image {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.6));
+}
+
+.item-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 2;
+}
+
+.item-rarity-badge {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+}
+
+/* --- Dynamic Rarity Border & Glow Themes --- */
+.item-card.rarity-mil-spec {
+  border-bottom: 4px solid var(--rarity-mil-spec);
+  background: radial-gradient(circle at 50% 80%, rgba(75, 105, 255, 0.15) 0%, var(--bg-card) 70%);
+}
+.item-card.rarity-mil-spec .item-rarity-badge {
+  color: var(--rarity-mil-spec);
+}
+
+.item-card.rarity-restricted {
+  border-bottom: 4px solid var(--rarity-restricted);
+  background: radial-gradient(circle at 50% 80%, rgba(136, 71, 255, 0.18) 0%, var(--bg-card) 70%);
+}
+.item-card.rarity-restricted .item-rarity-badge {
+  color: var(--rarity-restricted);
+}
+
+.item-card.rarity-classified {
+  border-bottom: 4px solid var(--rarity-classified);
+  background: radial-gradient(circle at 50% 80%, rgba(211, 44, 230, 0.2) 0%, var(--bg-card) 70%);
+}
+.item-card.rarity-classified .item-rarity-badge {
+  color: var(--rarity-classified);
+}
+
+.item-card.rarity-covert {
+  border-bottom: 4px solid var(--rarity-covert);
+  background: radial-gradient(circle at 50% 80%, rgba(235, 75, 75, 0.24) 0%, var(--bg-card) 70%);
+}
+.item-card.rarity-covert .item-rarity-badge {
+  color: var(--rarity-covert);
+}
+
+.item-card.rarity-special {
+  border-bottom: 4px solid var(--rarity-special);
+  background: radial-gradient(circle at 50% 80%, rgba(255, 215, 0, 0.28) 0%, var(--bg-card) 70%);
+  box-shadow: inset 0 0 16px rgba(255, 215, 0, 0.1), 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+.item-card.rarity-special .item-rarity-badge {
+  color: var(--rarity-special);
+}
+
+/* ==========================================================================
+   4. CONTROLS & CTA BUTTON
+   ========================================================================== */
+.controls-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.open-case-btn {
+  background: linear-gradient(180deg, #448b38 0%, #2e6924 100%);
+  color: #ffffff;
+  border: 1px solid #57a847;
+  padding: 16px 48px;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 
+    0 4px 14px rgba(46, 105, 36, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.15s ease-in-out;
+}
+
+.open-case-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #4fa341 0%, #357a2a 100%);
+  box-shadow: 
+    0 6px 20px rgba(79, 163, 65, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: translateY(-1px);
+}
+
+.open-case-btn:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 2px 8px rgba(46, 105, 36, 0.4);
+}
+
+.open-case-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  filter: grayscale(0.5);
+}
+
+/* ==========================================================================
+   5. WINNING ITEM INLINE BANNER
+   ========================================================================== */
+.winning-item-container {
+  min-height: 100px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.win-display {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 16px 28px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  animation: fadeIn 0.3s ease;
+}
+
+.win-display-empty {
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 16px 24px;
+  background: rgba(27, 30, 36, 0.4);
+  border: 1px dashed var(--border-subtle);
+  border-radius: 8px;
+  width: 100%;
+  max-width: 520px;
+}
+
+.win-thumbnail {
+  width: 72px;
+  height: 72px;
+  border-radius: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.win-thumbnail img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.win-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.win-subtitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+}
+
+.win-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.win-rarity {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   6. INVENTORY SECTION & ITEM STASH
+   ========================================================================== */
+.inventory-section {
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.inventory-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 16px;
+}
+
+.inventory-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.inventory-heading {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.inventory-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.inventory-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stat-pill {
+  font-size: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 6px 14px;
+  border-radius: 20px;
+  color: var(--text-secondary);
+}
+
+.stat-pill strong {
+  color: var(--text-primary);
+}
+
+.clear-inv-btn {
+  background: transparent;
+  border: 1px solid #4a2828;
+  color: #ef4444;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-inv-btn:hover {
+  background: #381a1a;
+  color: #fff;
+}
+
+/* Inventory Grid Container */
+.inventory-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 14px;
+  min-height: 140px;
+}
+
+.inventory-empty {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 36px 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+  text-align: center;
+}
+
+.empty-icon {
+  opacity: 0.4;
+}
+
+/* Individual Inventory Stash Card */
+.inv-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 180px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  animation: itemDrop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.inv-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-focus);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+}
+
+.inv-card-visual {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inv-card-visual img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+}
+
+.inv-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.inv-weapon {
+  font-size: 10px;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.inv-name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.inv-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 10px;
+  padding-top: 4px;
+}
+
+/* ==========================================================================
+   7. VICTORY MODAL POPUP SYSTEM
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 10, 14, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  padding: 20px;
+}
+
+.modal-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-container {
+  position: relative;
+  background: #181b22;
+  border: 2px solid var(--border-subtle);
+  border-radius: 12px;
+  max-width: 480px;
+  width: 100%;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 
+    0 24px 64px rgba(0, 0, 0, 0.7),
+    0 0 40px rgba(0, 0, 0, 0.5);
+  transform: scale(0.92) translateY(12px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+}
+
+.modal-backdrop.active .modal-container {
+  transform: scale(1) translateY(0);
+}
+
+/* Dynamic Radial Rarity Flare Behind the Weapon */
+.modal-rarity-flare {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.35;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  z-index: 2;
+  width: 100%;
+}
+
+.modal-subtitle {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-secondary);
+}
+
+.modal-rarity-badge {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 4px 14px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid var(--border-subtle);
+}
+
+.modal-body {
+  margin: 20px 0 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  z-index: 2;
+  width: 100%;
+}
+
+.modal-image-wrapper {
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-weapon-img {
+  max-width: 85%;
+  max-height: 85%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 20px rgba(0, 0, 0, 0.75));
+  animation: floatWeapon 3s ease-in-out infinite;
+}
+
+.modal-weapon-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.modal-weapon-type {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+}
+
+.modal-skin-name {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.modal-price-tag {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 4px 14px;
+  border-radius: 20px;
+}
+
+.modal-price-tag strong {
+  color: #10b981;
+  font-size: 15px;
+  font-family: monospace;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  z-index: 2;
+}
+
+.modal-keep-btn {
+  flex: 1;
+  background: #272c37;
+  color: #e5e7eb;
+  border: 1px solid var(--border-subtle);
+  padding: 13px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.modal-keep-btn:hover {
+  background: #343c4c;
+  border-color: var(--border-focus);
+  color: #ffffff;
+}
+
+.modal-sell-btn {
+  flex: 1.3;
+  background: linear-gradient(180deg, #10b981 0%, #059669 100%);
+  color: #ffffff;
+  border: 1px solid #34d399;
+  padding: 13px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.45);
+  transition: all 0.15s ease;
+}
+
+.modal-sell-btn:hover {
+  background: linear-gradient(180deg, #34d399 0%, #10b981 100%);
+  box-shadow: 0 6px 20px rgba(52, 211, 153, 0.6);
+  transform: translateY(-1px);
+}
+
+.modal-spin-again-link {
+  margin-top: 12px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+  z-index: 2;
+}
+
+.modal-spin-again-link:hover {
+  color: var(--accent-gold);
+}
+
+/* Inventory Sell Button */
+.inv-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  animation: itemDrop 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.inv-sell-btn {
+  width: 100%;
+  margin-top: 8px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  padding: 6px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.inv-sell-btn:hover {
+  background: #10b981;
+  color: #0b1e15;
+  border-color: #34d399;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+}
+
+/* Balance Smooth Highlight Pulse */
+.balance-value {
+  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
+}
+
+.balance-value.pulse-up {
+  color: #34d399;
+  animation: pulseScaleUp 0.6s ease;
+}
+
+.balance-value.pulse-down {
+  color: #f87171;
+  animation: pulseScaleDown 0.6s ease;
+}
+
+@keyframes pulseScaleUp {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.15); filter: brightness(1.4); }
+  100% { transform: scale(1); filter: brightness(1); }
+}
+
+@keyframes pulseScaleDown {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.92); }
+  100% { transform: scale(1); }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes itemDrop {
+  from { opacity: 0; transform: scale(0.9) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes floatWeapon {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  :root {
+    --card-width: 140px;
+    --card-height: 180px;
+    --viewport-height: 200px;
+  }
+  
+  .header {
+    flex-direction: column;
+    gap: 12px;
+    align-items: stretch;
+  }
+  
+  .header-actions {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+  }
+}
+
+/* ==========================================================================
+   8. CS2 CASE SHOWCASE (INITIAL CONTAINER INSPECT VIEW)
+   ========================================================================== */
+.case-showcase {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  animation: fadeIn 0.4s ease;
+}
+
+.case-hero-container {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+  flex-wrap: wrap;
+}
+
+.case-crate-visual {
+  position: relative;
+  width: 280px;
+  height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin: 0 auto;
+}
+
+.case-glow-backdrop {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: radial-gradient(circle, rgba(229, 179, 56, 0.35) 0%, rgba(20, 23, 29, 0) 70%);
+  border-radius: 50%;
+  filter: blur(30px);
+  pointer-events: none;
+}
+
+.case-crate-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 28px rgba(0, 0, 0, 0.8));
+  transition: transform 0.3s ease;
+}
+
+.case-crate-img:hover {
+  transform: scale(1.04) rotate(-1deg);
+}
+
+.case-hero-details {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.case-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--accent-gold);
+}
+
+.case-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.case-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.case-key-requirement {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 16, 20, 0.7);
+  border: 1px solid var(--border-subtle);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.key-icon {
+  font-size: 16px;
+}
+
+.case-hero-actions {
+  margin-top: 8px;
+}
+
+/* Gallery inside Case Showcase */
+.case-gallery-section {
+  border-top: 1px solid var(--border-subtle);
+  padding-top: 24px;
+}
+
+.gallery-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.gallery-title {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  font-weight: 700;
+}
+
+.gallery-legend {
+  font-size: 11px;
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.case-gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+}
+
+.gallery-chip {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 6px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 4px;
+  transition: transform 0.15s ease, border-color 0.15s ease;
+}
+
+.gallery-chip:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-focus);
+}
+
+.gallery-chip-img {
+  width: 60px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.gallery-chip-weapon {
+  font-size: 9px;
+  color: var(--text-secondary);
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.gallery-chip-name {
+  font-size: 11px;
+  color: var(--text-primary);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.gallery-chip-price {
+  font-size: 10px;
+  font-weight: 700;
+  color: #10b981;
+  font-family: monospace;
+}
+
+/* Back to Case Button */
+.case-info-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back-to-case-btn {
+  background: #242933;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.back-to-case-btn:hover {
+  color: #ffffff;
+  border-color: var(--border-focus);
+  background: #2f3644;
+}
+
+/* Hidden Utility */
+.hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   9. GOLD MYSTERY QUESTION MARK REEL STYLING
+   ========================================================================== */
+.item-card.is-special-mystery {
+  background: radial-gradient(circle at 50% 80%, rgba(255, 215, 0, 0.3) 0%, #1a1708 75%) !important;
+  border-bottom: 4px solid var(--rarity-special) !important;
+  box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.25), 0 4px 14px rgba(0, 0, 0, 0.4) !important;
+}
+
+.item-card.is-special-mystery .item-weapon {
+  color: var(--rarity-special) !important;
+  font-weight: 800;
+}
+
+.item-card.is-special-mystery .item-name {
+  color: #fff1b8 !important;
+  font-weight: 800;
+}
+
+.item-card.is-special-mystery .item-image {
+  max-width: 95%;
+  max-height: 95%;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.65));
+  animation: pulseGold 2s infinite ease-in-out;
+}
+
+@keyframes pulseGold {
+  0%, 100% { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5)); transform: scale(1); }
+  50% { filter: drop-shadow(0 0 16px rgba(255, 215, 0, 0.85)); transform: scale(1.03); }
+}

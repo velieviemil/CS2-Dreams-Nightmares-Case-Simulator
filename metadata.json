@@ -1,0 +1,6 @@
+{
+  "name": "CS2 Case Opening Simulation - RNG Engine",
+  "description": "Realistic weighted probability and random number generation engine for CS2 case openings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
